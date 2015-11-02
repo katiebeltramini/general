@@ -6,12 +6,12 @@
 
 function blockercount() {
     // Define an input range with values of some kind in it.
-    var test_range = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Script Test - V2 Softlaunch Todo").getRange("D9:E74");
+    var test_range = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Script Test - V2 Softlaunch").getRange("D9:E74");
     // Pass the input range as an argument to function "getCountValues()" and
    // capture its return object.
     var dependencies = getDependencies(test_range);
     // Add a new sheet for output and store a reference to the sheet object object.
-    var new_sheet = SpreadsheetApp.getActiveSpreadsheet().insertSheet("Dependency and Blocking Results");
+    var new_sheet = SpreadsheetApp.getActiveSpreadsheet().insertSheet("Dependency Results");
    // var result_range = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("output6").getRange("A1:Z300");
     // Create a range object of one cell in the new sheet for output.
     var output_range = new_sheet.getRange("A1");
