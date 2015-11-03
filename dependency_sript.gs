@@ -7,8 +7,7 @@
 function blockercount() {
     // Define an input range with values of some kind in it.
     var test_range = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Script Test - V2 Softlaunch").getRange("D9:E74");
-    // Pass the input range as an argument to function "getCountValues()" and
-   // capture its return object.
+    // Pass the input range as an argument to function "getCountValues()" and capture its return object.
     var dependencies = getDependencies(test_range);
     // Add a new sheet for output and store a reference to the sheet object object.
    // var new_sheet = SpreadsheetApp.getActiveSpreadsheet().insertSheet("Dependency Results");
@@ -23,7 +22,7 @@ function blockercount() {
         output_range.offset(row_counter, 0).setValue(key);  
         var read_col = 1;
         var write_col = 1;
-        if (value_dependencies != 0) {
+      if ((value_dependencies != 0)||(value_dependencies != "")) {
              writeDependencies(value_dependencies, row_counter, write_col, output_range);
              while (output_range.offset(row_counter,read_col).getValue()!= "") {
                value_dependencies = dependencies[output_range.offset(row_counter,read_col).getValue()];
