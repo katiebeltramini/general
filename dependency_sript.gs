@@ -99,12 +99,13 @@ function countBlockers(){
           block_count++; 
           break test;
         }
-      }    
-     if(done_range.offset(row_counter, 0).getValue() != "Done"){
+      }  
+    }
+     if(done_range.offset(num_tasks, 0).getValue() != "Done"){
         output_range.offset(num_tasks,0).setValue(block_count);
       }  else {
         output_range.offset(num_tasks,0).setValue("*");
       }
-    }
+    
   }
 }
