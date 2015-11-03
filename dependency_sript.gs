@@ -84,21 +84,23 @@ function countBlockers(){
   var blocker;
   var cell_value;
   var done_range = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Script Test - V2 Softlaunch").getRange("C9:C74");
-  var output_range = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Script Test - V2 Softlaunch").getRange("CA9");
-  for (var row_counter=1; row_counter < range.getNumRows(); row_counter++) {
-    for(var column_counter=1; column_counter < range.getNumColumns(); column_counter++) {
-       blocker = range.offset(row_counter,0).getValue();
-       cell_value = range.offset(row_counter, column_counter).getValue();
-       if(blocker == cell_value){
+  var output_range = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Script Test - V2 Softlaunch").getRange("G9");
+  for(var num_tasks=0; num_tasks < range.getNumRows(); row_counter++) {
+    for (var row_counter=0; row_counter < range.getNumRows(); row_counter++) {
+      for(var column_counter=1; column_counter < range.getNumColumns(); column_counter++) {
+        blocker = range.offset(row_counter,0).getValue();
+        cell_value = range.offset(row_counter, column_counter).getValue();
+        if(blocker == cell_value){
           block_count++; 
-          break;
+          //break;
         }
-    }    
-    if(done_range.offset(row_counter, 0).getValue() != "Done")
-    {
-      output_range.offset(row_counter,0).setValue(block_count);
-    }  else {
-      output_range.offset(row_counter,0).setValue("Done");
+      }    
+      if(done_range.offset(row_counter, 0).getValue() != "*")
+      {
+        output_range.offset(row_counter,0).setValue(block_count);
+      }  else {
+        output_range.offset(row_counter,0).setValue("Done");
+      }
     }
     block_count = 0;
   }
