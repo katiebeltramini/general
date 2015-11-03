@@ -28,7 +28,8 @@ function blockercount() {
                if (value_dependencies != 0) {
                    writeDependencies(value_dependencies, row_counter, write_col, output_range);  //write out dependencies that were looked up
                    sub_counter++;
-                    if(sub_counte>50){
+                    if(sub_counter>50){
+                      output_range.offset(row_counter, write_col).setValue("ERROR - POTENTIAL CIRCULAR REFERENCE"); 
                       break;
                     }
               } else {
@@ -41,6 +42,8 @@ function blockercount() {
                 output_range.offset(row_counter, write_col).setValue(0);  //set dependencies to 0 otherwise
          }
       row_counter++;      //increment row counter
+
+        
     }   
 
 }
