@@ -11,10 +11,11 @@ function blockercount() {
    // capture its return object.
     var dependencies = getDependencies(test_range);
     // Add a new sheet for output and store a reference to the sheet object object.
-    var new_sheet = SpreadsheetApp.getActiveSpreadsheet().insertSheet("Dependency Results");
+   // var new_sheet = SpreadsheetApp.getActiveSpreadsheet().insertSheet("Dependency Results");
    // var result_range = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("output6").getRange("A1:Z300");
     // Create a range object of one cell in the new sheet for output.
-    var output_range = new_sheet.getRange("A1");
+  //  var output_range = new_sheet.getRange("A1");
+       var output_range = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Script Test - V2 Softlaunch").getRange("J9");
     // Set a row counter for output.
     var row_counter = 0;
     for  ( var key in dependencies ) {
