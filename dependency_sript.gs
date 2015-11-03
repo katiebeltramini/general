@@ -77,33 +77,33 @@ function writeDependencies(value_dependencies, row_counter, col_counter, output_
 }
 
 
-
+//function counts how many rows a task appears in.  For each row, the count is incremented by 1.
 function countBlockers(){
   var range = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Script Test - V2 Softlaunch").getRange("J9:Z74");
-  var block_count;
-  var blocker;
-  var cell_value;
-  var num_tasks;
-  var row_counter;
-  var column_counter;
-  var done_range = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Script Test - V2 Softlaunch").getRange("C9:C74");
-  var output_range = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Script Test - V2 Softlaunch").getRange("G9");
+  var block_count; //running total for counting how many tasks are being blocked by the task
+  var blocker;  //the task id that you are looking to see how many other tasks it is blocking
+  var cell_value; //the cell that you are testing to see if it matches the blocker
+  var num_tasks;  //holds the number of tasks and is used to iterate throw the tasks
+  var row_counter;  //counts the number of rows that are iterated through for each task
+  var column_counter;  //for iterating through columns
+  var done_range = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Script Test - V2 Softlaunch").getRange("C9:C74"); //range that is used to count blockers
+  var output_range = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Script Test - V2 Softlaunch").getRange("G9");  //column that holds the total blocker count
   for(num_tasks=0; num_tasks < range.getNumRows(); num_tasks++) {
     block_count = 0;
-    test: for (row_counter=0; row_counter < range.getNumRows(); row_counter++) {
+    next_row: for (row_counter=0; row_counter < range.getNumRows(); row_counter++) {
       for(column_counter=1; column_counter < range.getNumColumns(); column_counter++) {
         blocker = range.offset(num_tasks,0).getValue();
-        cell_value = range.offset(row_counter, column_counter).getValue();
-        if(blocker == cell_value){
+        cell_value = range.offset(row_counter, column_counter).getValue(); 
+        if(blocker == cell_value){  //if the blocker task matches the a cell 
           block_count++; 
-          break test;
+          continue next_row;  //block count can only be increased once per row
         }
       }  
     }
-     if(done_range.offset(num_tasks, 0).getValue() != "Done"){
+     if(done_range.offset(num_tasks, 0).getValue() != "Done"){   //if a task is done, it can't block anything
         output_range.offset(num_tasks,0).setValue(block_count);
       }  else {
-        output_range.offset(num_tasks,0).setValue("Done");
+        output_range.offset(num_tasks,0).setValue(0);  //set to 0 because task is done
       }
     
   }
