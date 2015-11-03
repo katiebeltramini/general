@@ -76,3 +76,21 @@ function writeDependencies(value_dependencies, row_counter, col_counter, output_
      }             
   }  
 }
+
+function countBlockers(){
+  var range = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Script Test - V2 Softlaunch").getRange("J9:BZ74");
+  var block_count = 0;
+  var output_range = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Script Test - V2 Softlaunch").getRange("CA9");
+    for (var row_counter=0; row_counter < range.getNumRows(); row_counter++) {
+      for(var column_counter=1; column_counter < range.getNumColumns(); column_counter++) {
+        var blocker = range.offset(row_counter,0).getValue();
+        var cell_value = range.offset(row_counter, column_counter).getValue();
+        if(blocker == cell_value){
+          block_count++; 
+          break;
+        }
+    }    
+  output_range.offset(row_counter,0).setValue(block_count);
+  block_count = 0;
+  }
+}
