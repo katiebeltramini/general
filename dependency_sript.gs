@@ -78,28 +78,32 @@ function writeDependencies(value_dependencies, row_counter, col_counter, output_
 
 
 
+
 function countBlockers(){
-  var range = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Script Test - V2 Softlaunch").getRange("J9:BZ74");
+  var range = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Script Test - V2 Softlaunch").getRange("J9:Z74");
   var block_count = 0;
   var blocker;
   var cell_value;
+  var num_tasks;
+  var row_counter;
+  var column_counter;
   var done_range = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Script Test - V2 Softlaunch").getRange("C9:C74");
   var output_range = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Script Test - V2 Softlaunch").getRange("G9");
-  for(var num_tasks=0; num_tasks < range.getNumRows(); row_counter++) {
-    for (var row_counter=0; row_counter < range.getNumRows(); row_counter++) {
-      for(var column_counter=1; column_counter < range.getNumColumns(); column_counter++) {
+  for(num_tasks=0; num_tasks < range.getNumRows(); num_tasks++) {
+    test: for (row_counter=0; row_counter < range.getNumRows(); row_counter++) {
+      for(column_counter=1; column_counter < range.getNumColumns(); column_counter++) {
         blocker = range.offset(row_counter,0).getValue();
         cell_value = range.offset(row_counter, column_counter).getValue();
         if(blocker == cell_value){
           block_count++; 
-          //break;
+          break test;
         }
       }    
-      if(done_range.offset(row_counter, 0).getValue() != "*")
+      if(done_range.offset(row_counter, 0).getValue() != "Done")
       {
         output_range.offset(row_counter,0).setValue(block_count);
       }  else {
-        output_range.offset(row_counter,0).setValue("Done");
+        output_range.offset(row_counter,0).setValue("**");
       }
     }
     block_count = 0;
