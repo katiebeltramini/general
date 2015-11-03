@@ -78,7 +78,6 @@ function writeDependencies(value_dependencies, row_counter, col_counter, output_
 
 
 
-
 function countBlockers(){
   var range = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Script Test - V2 Softlaunch").getRange("J9:Z74");
   var block_count;
@@ -104,7 +103,7 @@ function countBlockers(){
      if(done_range.offset(num_tasks, 0).getValue() != "Done"){
         output_range.offset(num_tasks,0).setValue(block_count);
       }  else {
-        output_range.offset(num_tasks,0).setValue("*");
+        output_range.offset(num_tasks,0).setValue("Done");
       }
     
   }
