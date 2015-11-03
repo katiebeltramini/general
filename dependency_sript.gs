@@ -1,8 +1,7 @@
-//Need to figure out how to handle empty rows
-//need to break if circular reference
-//figure out how to run updates 
-//improve comments and variable names
 
+//need to break if circular reference
+
+//function looks at a range of taskids and dependencies and writes out the subdependencies
 function blockercount() {
     // Define an input range with values of taskids and dependencies
     var test_range = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Script Test - V2 Softlaunch").getRange("D9:E74");
@@ -13,6 +12,7 @@ function blockercount() {
     // Set a row counter for output.
     var row_counter = 0;
     //go through each of the taskids
+    var sub_counter = 0; //to track number of subdependencies and to try and break if it is an issue
     for  (var key in dependencies ) {
         var value_dependencies = dependencies[key];
         output_range.offset(row_counter, 0).setValue(key);  
@@ -26,7 +26,11 @@ function blockercount() {
                  write_col++;  //increment the column column counter - check how many columns until empty
                   }
                if (value_dependencies != 0) {
-                   writeDependencies(value_dependencies, row_counter, write_col, output_range);  //write out dependencies that were looked up                 
+                   writeDependencies(value_dependencies, row_counter, write_col, output_range);  //write out dependencies that were looked up
+                   sub_counter++;
+                    if(sub_counte>50){
+                      break;
+                    }
               } else {
                  output_range.offset(row_counter, write_col).setValue(0);  //set dependencies to 0 otherwise
               }
