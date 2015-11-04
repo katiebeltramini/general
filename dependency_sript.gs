@@ -1,3 +1,9 @@
+var input_cells = "D9:E74";
+var output_cells = "J9";
+var block_input = "J9:Z74";
+var block_output =  "G9";
+var done_cells = "C9:C74";
+
 //function looks at a range of taskids and dependencies and writes out the subdependencies
 function blockercount() {
     // Define an input range with values of taskids and dependencies
@@ -38,11 +44,8 @@ function blockercount() {
          } else {
                 output_range.offset(row_counter, write_col).setValue(0);  //set dependencies to 0 otherwise
          }
-      row_counter++;      //increment row counter
-
-        
+      row_counter++;      //increment row counter        
     }   
-
 }
  
 
@@ -59,8 +62,6 @@ function getDependencies(range) {
         }      
     return dependencies;  //returns mapping
 }
-
-//IMPROVEMENT WOULD BE TO NOT WRITE IF ALREADY WRITTEN BEFORE
 
 //function for writing out the list of dependencies for a task 
 function writeDependencies(value_dependencies, row_counter, col_counter, output_range) {
