@@ -1,17 +1,18 @@
-var input_cells = "D9:E74";
-var output_cells = "J9";
-var block_input = "J9:Z74";
-var block_output =  "G9";
-var done_cells = "C9:C74";
+//global variables
+var input_cells = "D9:E74";  //range of tasks and dependencies
+var output_cells = "J9";  //where to put subdepedencies
+var block_input = "J9:Z74";  //subdependencies to use to count blockers
+var block_output =  "G9";  //blocker result columns
+var done_cells = "C9:C74";  //status column
 
 //function looks at a range of taskids and dependencies and writes out the subdependencies
 function blockercount() {
     // Define an input range with values of taskids and dependencies
-    var test_range = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Script Test - V2 Softlaunch").getRange("D9:E74");
+    var test_range = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Script Test - V2 Softlaunch").getRange(input_cells);
     // Pass the input range as an argument to function "getDependencies()" and capture its return object (mapping of taskids and dependencies)
     var dependencies = getDependencies(test_range);
     // Create a range object of one cell in the new sheet for output.
-    var output_range = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Script Test - V2 Softlaunch").getRange("J9");
+    var output_range = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Script Test - V2 Softlaunch").getRange(output_cells);
     // Set a row counter for output.
     var row_counter = 0;
     //go through each of the taskids
@@ -27,7 +28,7 @@ function blockercount() {
                value_dependencies = dependencies[output_range.offset(row_counter,read_col).getValue()];  //get the value of the depencency and look up if it has dependenciies
                while(output_range.offset(row_counter,write_col).getValue()!= "") {  
                  write_col++;  //increment the column column counter - check how many columns until empty
-                  }
+                 }
                if (value_dependencies != 0) {
                    writeDependencies(value_dependencies, row_counter, write_col, output_range);  //write out dependencies that were looked up
                    sub_counter++;
@@ -80,15 +81,15 @@ function writeDependencies(value_dependencies, row_counter, col_counter, output_
 
 //function counts how many rows a task appears in.  For each row, the count is incremented by 1.
 function countBlockers(){
-  var range = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Script Test - V2 Softlaunch").getRange("J9:Z74");
+  var range = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Script Test - V2 Softlaunch").getRange(block_input);
   var block_count; //running total for counting how many tasks are being blocked by the task
   var blocker;  //the task id that you are looking to see how many other tasks it is blocking
   var cell_value; //the cell that you are testing to see if it matches the blocker
   var num_tasks;  //holds the number of tasks and is used to iterate throw the tasks
   var row_counter;  //counts the number of rows that are iterated through for each task
   var column_counter;  //for iterating through columns
-  var done_range = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Script Test - V2 Softlaunch").getRange("C9:C74"); //range that is used to count blockers
-  var output_range = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Script Test - V2 Softlaunch").getRange("G9");  //column that holds the total blocker count
+  var done_range = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Script Test - V2 Softlaunch").getRange(done_cells); //range that is used to count blockers
+  var output_range = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Script Test - V2 Softlaunch").getRange(block_output);  //column that holds the total blocker count
   for(num_tasks=0; num_tasks < range.getNumRows(); num_tasks++) {
     block_count = 0;
     next_row: for (row_counter=0; row_counter < range.getNumRows(); row_counter++) {
